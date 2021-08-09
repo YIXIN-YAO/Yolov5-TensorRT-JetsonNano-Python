@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-# --------------------------------
-# Name:     yolov5_trt.py
-# Author:   yaoyixin
-# Date:     2021/8/4 15:03
-# Company:  schinper
-# Description:
-# --------------------------------
 """
 An example that uses TensorRT's Python api to make inferences.
 """

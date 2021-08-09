@@ -2,7 +2,7 @@
 
 项目地址 [wang-xinyu/tensorrtx](https://github.com/wang-xinyu/tensorrtx).
 
-环境：以下步骤都在204的NGC镜像:nvcr.io/nvidia/pytorch:21.06-py3和nano 的jetpack 4.4系统上成功运行。
+环境：以下步骤都在NGC镜像:nvcr.io/nvidia/pytorch:21.06-py3和jetson nano 的jetpack 4.4系统上成功运行。
 
 yolov5目前有v1.0, v2.0, v3.0, v3.1, v4.0 和v5.0几个版本，网络结构稍有差别，如果想转化自己的yolov5模型，首先要确定自己模型版本，然后在release中下载对应版本的tensorrtx。我们的头盔检测使用的是yolov5s-3.1，所以下载对应版本的tensorrtx release，并按照其[README.MD](https://github.com/wang-xinyu/tensorrtx/tree/yolov5-v3.1/yolov5)操作。
 
@@ -39,7 +39,7 @@ yolov5目前有v1.0, v2.0, v3.0, v3.1, v4.0 和v5.0几个版本，网络结构�
 
 ![image-20210804111258610](images/image-20210804111258610.png)
 
-如果使用的是刚拉去下来的nvcr.io/nvidia/pytorch:21.06-py3镜像，需要安装以下环境：
+如果使用的是刚拉取下来的nvcr.io/nvidia/pytorch:21.06-py3镜像，需要安装以下环境：
 
 + pip install opencv-python -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 + apt update
