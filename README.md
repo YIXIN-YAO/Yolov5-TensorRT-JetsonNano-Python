@@ -1,5 +1,5 @@
 # yolov5-TRT C++&Python
-
+[中文版](README-zh.md) | English version  
 Based on: [wang-xinyu/tensorrtx](https://github.com/wang-xinyu/tensorrtx).     
 ## State
 TensorRT accelerated Yolov5s, used for helmet detection, can run on jetson Nano, FPS=10.    
