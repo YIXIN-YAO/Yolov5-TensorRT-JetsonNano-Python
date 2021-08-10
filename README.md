@@ -35,13 +35,17 @@ I use yolov5s-3.1 for helmet detection, so I follow this [README.MD](https://git
 5. copy your model to ultralytics/yolov5, make sure the file name is yolov5s.pt     
 6. run python gen_wts.py in ultralytics/yolov5, a file named yolov5s.wts will be generated      
 7. put yolov5s.wts into tensorrtx/yolov5        
-8. + mkdir build
-    + cd build
-    + cmake ..
-    + make      
-9. sudo ./yolov5 -s , serialize model to plan file i.e. 'yolov5s.engine'        
-10. sudo ./yolov5 -d ../samples, deserialize plan file and run inference, the images in samples will be processed,
+8. make and build
+  ```
+mkdir build
+cd build
+cmake ..
+make
+```
+10. sudo ./yolov5 -s , serialize model to plan file i.e. 'yolov5s.engine'  
+11. sudo ./yolov5 -d ../samples, deserialize plan file and run inference, the images in samples will be processed,
  results are saved in output folder.
+
 
 ## Python
 
