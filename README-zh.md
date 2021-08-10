@@ -24,16 +24,16 @@ yolov5目前有v1.0, v2.0, v3.0, v3.1, v4.0 和v5.0几个版本，网络结构�
 2. 按照提示修改number of classes(仓库里的已经改过)
 
  ![image-20210803093416144](images/image1.png)
-3. git clone -b v3.1 https://github.com/ultralytics/yolov5.git 下载yolov5 3.1的官方仓库。
-4. 拷贝 tensorrtx/yolov5/gen_wts.py 到 ultralytics/yolov5。
-5. 将待转化模型拷贝到ultralytics/yolov5，确保.pt文件名为yolov5s.pt。
-6. 在ultralytics/yolov5文件夹下执行 python gen_wts.py，生成yolov5s.wts文件。
-7. 将yolov5s.wts 放到tensorrtx/yolov5文件夹
+3. git clone -b v3.1 https://github.com/ultralytics/yolov5.git 下载yolov5 3.1的官方仓库。       
+4. 拷贝 tensorrtx/yolov5/gen_wts.py 到 ultralytics/yolov5。     
+5. 将待转化模型拷贝到ultralytics/yolov5，确保.pt文件名为yolov5s.pt。     
+6. 在ultralytics/yolov5文件夹下执行 python gen_wts.py，生成yolov5s.wts文件。     
+7. 将yolov5s.wts 放到tensorrtx/yolov5文件夹       
 8. + mkdir build
     + cd build
     + cmake ..
-    + make
-9. sudo ./yolov5 -s 生成yolov5s.engine文件
+    + make      
+9. sudo ./yolov5 -s 生成yolov5s.engine文件      
 10. sudo ./yolov5 -d  ../samples 调用yolov5s.engine文件，检测samples文件夹中的图片。输出在output文件夹。
 
 ## Python

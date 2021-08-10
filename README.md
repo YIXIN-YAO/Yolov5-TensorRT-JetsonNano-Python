@@ -29,17 +29,17 @@ I use yolov5s-3.1 for helmet detection, so I follow this [README.MD](https://git
 1. git clone -b yolov5-v3.1 https://github.com/wang-xinyu/tensorrtx.git to download tensorrtx 3.1
 2. modify the number of classes in yololayer.h
 
- ![image-20210803093416144](images/image1.png)
-3. git clone -b v3.1 https://github.com/ultralytics/yolov5.git to download yolov5:3.1 official repository
-4. copy tensorrtx/yolov5/gen_wts.py to ultralytics/yolov5。
-5. copy your model to ultralytics/yolov5, make sure the file name is yolov5s.pt
-6. run python gen_wts.py in ultralytics/yolov5, a file named yolov5s.wts will be generated
-7. put yolov5s.wts into tensorrtx/yolov5
+ ![image-20210803093416144](images/image1.png)      
+3. git clone -b v3.1 https://github.com/ultralytics/yolov5.git to download yolov5:3.1 official repository       
+4. copy tensorrtx/yolov5/gen_wts.py to ultralytics/yolov5       
+5. copy your model to ultralytics/yolov5, make sure the file name is yolov5s.pt     
+6. run python gen_wts.py in ultralytics/yolov5, a file named yolov5s.wts will be generated      
+7. put yolov5s.wts into tensorrtx/yolov5        
 8. + mkdir build
     + cd build
     + cmake ..
-    + make
-9. sudo ./yolov5 -s , serialize model to plan file i.e. 'yolov5s.engine'
+    + make      
+9. sudo ./yolov5 -s , serialize model to plan file i.e. 'yolov5s.engine'        
 10. sudo ./yolov5 -d ../samples, deserialize plan file and run inference, the images in samples will be processed,
  results are saved in output folder.
 
@@ -52,16 +52,16 @@ in build/ folder, detects images in samples/ by default.
 ![image-20210804111258610](images/image-20210804111258610.png)
 
 If you use a new nvcr.io/nvidia/pytorch:21.06-py3 image, set up following steps：
-
-+ python3 -m pip install opencv-python
-+ apt update
-+ apt install libgl1-mesa-glx
-
+```
+python3 -m pip install opencv-python
+apt update
+apt install libgl1-mesa-glx
+```
 
 **Parameters：**
 
 ![image-20210804111639065](images/image-20210804111639065.png)
-
+```
 -d：path to input folder
 
 -o：path to output folder
@@ -70,7 +70,7 @@ If you use a new nvcr.io/nvidia/pytorch:21.06-py3 image, set up following steps�
 of images.
 
 -s：show the result.
-
+```
 **RUN**
 ```
 python yolov5_trt.py -v 1.mp4 -s  
