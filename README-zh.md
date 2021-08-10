@@ -23,7 +23,8 @@ yolov5目前有v1.0, v2.0, v3.0, v3.1, v4.0 和v5.0几个版本，网络结构�
 1. git clone -b yolov5-v3.1 https://github.com/wang-xinyu/tensorrtx.git 下载tensorrtx 3.1。
 2. 按照提示修改number of classes(仓库里的已经改过)
 
- ![image-20210803093416144](images/image1.png)
+ ![image-20210803093416144](images/image1.png) 
+ 
 3. git clone -b v3.1 https://github.com/ultralytics/yolov5.git 下载yolov5 3.1的官方仓库。       
 4. 拷贝 tensorrtx/yolov5/gen_wts.py 到 ultralytics/yolov5。     
 5. 将待转化模型拷贝到ultralytics/yolov5，确保.pt文件名为yolov5s.pt。     
