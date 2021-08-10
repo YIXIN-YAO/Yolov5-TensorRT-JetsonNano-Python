@@ -1,73 +1,87 @@
 # yolov5-TRT C++&Python
 
-项目地址 [wang-xinyu/tensorrtx](https://github.com/wang-xinyu/tensorrtx).
+Based on: [wang-xinyu/tensorrtx](https://github.com/wang-xinyu/tensorrtx).     
+## State
+TensorRT accelerated Yolov5s, used for helmet detection, can run on jetson Nano, FPS=10.    
+On the basis of the tensorrtx, I modified yolov5_trt.py, using Numpy for network post-processing, 
+removed the source code's dependence on PyTorch, which made the code run on jetson nano.        
+At the same time, this code is not limited to helmet detection, for other versions of Yolov5s and 
+prediction tasks, you just need to make corresponding modification according to the TensorRTX readme.
+## Environment
+Following steps worked successfully on these environments:  
++ NGC docker image:nvcr.io/nvidia/pytorch:21.06-py3   
++ jetpack 4.4 on jetson nano
 
-环境：以下步骤都在NGC镜像:nvcr.io/nvidia/pytorch:21.06-py3和jetson nano 的jetpack 4.4系统上成功运行。
-
-yolov5目前有v1.0, v2.0, v3.0, v3.1, v4.0 和v5.0几个版本，网络结构稍有差别，如果想转化自己的yolov5模型，首先要确定自己模型版本，然后在release中下载对应版本的tensorrtx。我们的头盔检测使用的是yolov5s-3.1，所以下载对应版本的tensorrtx release，并按照其[README.MD](https://github.com/wang-xinyu/tensorrtx/tree/yolov5-v3.1/yolov5)操作。
+yolov5s has v1.0, v2.0, v3.0, v3.1, v4.0 and v5.0, there are some differences between the network structure, if you want to
+convert your yolov5s model, make sure using the right version of tensorrtx.
+First determine version of your own model, then download corresponding tensorrtx in the release.
+I use yolov5s-3.1 for helmet detection, so I follow this [README.MD](https://github.com/wang-xinyu/tensorrtx/tree/yolov5-v3.1/yolov5)
 
 ## C++
 
-**大致步骤：**
+**General steps:**
 
-+ 通过gen_wts.py将yolov5s.pt转为yolov5s.wts
-+ build，然后sudo ./yolov5 -s生成yolov5s.engine
-+ sudo ./yolov5 -d  ../samples 调用yolov5s.engine文件，检测samples文件夹中的图片。
++ convert yolov5s.pt to yolov5s.wts using gen_wts.py 
++ build,then sudo ./yolov5 -s to generate yolov5s.engine
++ sudo ./yolov5 -d  ../samples, call yolov5s.engine, detect images in samples folder.
 
-**详细步骤：**
-1. git clone -b yolov5-v3.1 https://github.com/wang-xinyu/tensorrtx.git 下载tensorrtx 3.1。
-2. 按照提示修改number of classes(仓库里的已经改过)
+**Detailed steps：**
+1. git clone -b yolov5-v3.1 https://github.com/wang-xinyu/tensorrtx.git to download tensorrtx 3.1
+2. modify the number of classes in yololayer.h
 
  ![image-20210803093416144](images/image1.png)
-3. git clone -b v3.1 https://github.com/ultralytics/yolov5.git 下载yolov5 3.1的官方仓库。
-4. 拷贝 tensorrtx/yolov5/gen_wts.py 到 ultralytics/yolov5。
-5. 将待转化模型拷贝到ultralytics/yolov5，确保.pt文件名为yolov5s.pt。
-6. 在ultralytics/yolov5文件夹下执行 python gen_wts.py，生成yolov5s.wts文件。
-7. 将yolov5s.wts 放到tensorrtx/yolov5文件夹
+3. git clone -b v3.1 https://github.com/ultralytics/yolov5.git to download yolov5:3.1 official repository
+4. copy tensorrtx/yolov5/gen_wts.py to ultralytics/yolov5。
+5. copy your model to ultralytics/yolov5, make sure the file name is yolov5s.pt
+6. run python gen_wts.py in ultralytics/yolov5, a file named yolov5s.wts will be generated
+7. put yolov5s.wts into tensorrtx/yolov5
 8. + mkdir build
     + cd build
     + cmake ..
     + make
-9. sudo ./yolov5 -s 生成yolov5s.engine文件
-10. sudo ./yolov5 -d  ../samples 调用yolov5s.engine文件，检测samples文件夹中的图片。输出在output文件夹。
+9. sudo ./yolov5 -s , serialize model to plan file i.e. 'yolov5s.engine'
+10. sudo ./yolov5 -d ../samples, deserialize plan file and run inference, the images in samples will be processed,
+ results are saved in output folder.
 
 ## Python
 
-**说明**
+**State**
 
-在C++那些步骤的基础上，可以直接运行python yolov5_trt.py，会自动去加载build文件夹下的yolov5s.engine和libmyplugins.so。默认检测samples文件夹下的图片，结果保存在output文件夹。
-
+Based on those C++ steps, you can run ``python yolov5_trt.py`` directly. It will call yolov5s.engine and libmyplugins.so
+in build/ folder, detects images in samples/ by default.     
 ![image-20210804111258610](images/image-20210804111258610.png)
 
-如果使用的是刚拉取下来的nvcr.io/nvidia/pytorch:21.06-py3镜像，需要安装以下环境：
+If you use a new nvcr.io/nvidia/pytorch:21.06-py3 image, set up following steps：
 
-+ pip install opencv-python -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
++ python3 -m pip install opencv-python
 + apt update
 + apt install libgl1-mesa-glx
 
-这个代码和原仓库代码的区别就是使用numpy替代torch做了模型输出的后处理，让它能在jetson nano上运行。
 
-**参数说明：**
+**Parameters：**
 
 ![image-20210804111639065](images/image-20210804111639065.png)
 
--d：输入图片文件夹
+-d：path to input folder
 
--o：保存输出的文件夹
+-o：path to output folder
 
--v：如果想检测视频，就加-v，如：python yolov5_trt.py -v 1.mp4，会覆盖检测图片的操作。
+-v：for video detection, add -v, for example：``python yolov5_trt.py -v 1.mp4``, which overrides commands
+of images.
 
--s：是否显示视频检测结果，在服务器上运行的时候不能加，不然会因为显示不了，报错。
+-s：show the result.
 
-**运行**
-
-+ python yolov5_trt.py -v 1.mp4 -s
+**RUN**
+```
+python yolov5_trt.py -v 1.mp4 -s  
+```
+"P" represents have helmet, "N" represents no helmet.
 
   ![result.png](images/result.png)
   
-  按esc中止。
-  
-+ python yolov5_trt.py
-
+  Press esc to stop
+```
+python yolov5_trt.py
+```
   ![image-20210804160817107](images/image-20210804160817107.png)
 
